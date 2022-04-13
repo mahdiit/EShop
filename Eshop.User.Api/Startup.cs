@@ -1,5 +1,6 @@
 using Eshop.Infrastructure.Command.User;
 using Eshop.Infrastructure.EventBus;
+using Eshop.Infrastructure.Extention;
 using Eshop.Infrastructure.Mongo;
 using Eshop.Infrastructure.Security;
 using Eshop.User.Api.Handlers;
@@ -34,6 +35,7 @@ namespace Eshop.User.Api
 
             services.AddControllers();
             services.AddMongoDb(Configuration);
+            services.AddJwt(Configuration);
             services.AddSingleton<IDbInit, DbInit>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddSingleton<IEncrypter, Encrypter>();

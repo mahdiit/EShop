@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eshop.Infrastructure.Athuntication;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Eshop.Infrastructure.Event.User
     public class UserValidate
     {
         public List<string> Error { get; set; }
+        public JwtAuthToken LoginToken { get; set; }
         public bool IsValid { get; set; }
     }
 }

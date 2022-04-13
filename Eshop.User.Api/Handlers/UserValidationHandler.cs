@@ -1,4 +1,5 @@
-﻿using Eshop.Infrastructure.Event.User;
+﻿using Eshop.Infrastructure.Athuntication;
+using Eshop.Infrastructure.Event.User;
 using Eshop.Infrastructure.Query.User;
 using Eshop.Infrastructure.Security;
 using Eshop.User.Api.Repositories;
@@ -14,11 +15,13 @@ namespace Eshop.User.Api.Handlers
     {
         IUserRepository UserRepository;
         IEncrypter Encrypter;
+        IAthunticationHandler Athuntication;
 
-        public UserValidationHandler(IUserRepository userRepository, IEncrypter encrypter)
+        public UserValidationHandler(IUserRepository userRepository, IEncrypter encrypter, IAthunticationHandler handler)
         {
             UserRepository = userRepository;
             Encrypter = encrypter;
+            Athuntication = handler;
         }
         public async Task Consume(ConsumeContext<ValidateUser> context)
         {
@@ -34,6 +37,7 @@ namespace Eshop.User.Api.Handlers
                 await context.RespondAsync<UserValidate>(new UserValidate()
                 {
                     Error= new List<string>() { "valid" },
+                    LoginToken = Athuntication.Create(user.UserId),
                     IsValid = true
                 });
             }

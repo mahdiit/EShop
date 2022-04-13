@@ -8,7 +8,8 @@ namespace Eshop.Infrastructure.Athuntication
 {
     public interface IAthunticationHandler
     {
-        JwtAuthToken Create(Guid userId);
+        JwtAuthToken Create(string userId);
+        TokenValidationParameters ValidationParameters { get; set; }
     }
 
     public class AthunticationHandler : IAthunticationHandler
@@ -18,7 +19,8 @@ namespace Eshop.Infrastructure.Athuntication
         SecurityKey SignSecurityKey;
         SigningCredentials Credentials;
         JwtHeader JwtHeaders;
-        TokenValidationParameters ValidationParameters;
+
+        public TokenValidationParameters ValidationParameters { get; set; }
 
         public AthunticationHandler(IConfiguration configuration)
         {
@@ -36,9 +38,29 @@ namespace Eshop.Infrastructure.Athuntication
                 IssuerSigningKey = SignSecurityKey
             };
         }
-        public JwtAuthToken Create(Guid userId)
+        public JwtAuthToken Create(string userId)
         {
-            
+            var nowUtc = DateTime.UtcNow;
+            var expires = nowUtc.AddMinutes(JwtConfig.ExpiryMinutes);
+            var centuryBegin = new DateTime(1970, 1, 1).ToUniversalTime();
+            var exp = (long)(new TimeSpan(expires.Ticks - centuryBegin.Ticks).TotalSeconds);
+            var now = (long)(new TimeSpan(nowUtc.Ticks - centuryBegin.Ticks).TotalSeconds);
+
+            var payload = new JwtPayload()
+            {
+                {"sub", userId },
+                {"iss", JwtConfig.Issuer },
+                {"iat", now },
+                {"unique_name", userId },
+                {"exp", exp  }
+            };
+
+            var jwt = new JwtSecurityToken(JwtHeaders, payload);
+            var token = tokenHandler.WriteToken(jwt);
+            var jsonToken = new JwtAuthToken() { Token = token, Expires = exp };
+
+
+            return jsonToken;
         }
     }
 }
