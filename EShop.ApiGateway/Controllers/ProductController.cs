@@ -38,13 +38,15 @@ namespace EShop.ApiGateway.Controllers
 
         [HttpPost("Add")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> Add([FromForm]CreateProduct product)
+        public async Task<IActionResult> Add([FromForm] CreateProduct product)
         {
-            var userId = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
-
-            product.CreatedUserId = userId;
-            product.CreatedAt = DateTime.Now;
-
+            if (User != null)
+            {
+                var userId = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                product.CreatedUserId = userId;
+                product.CreatedAt = DateTime.Now;
+            }
+            
             var uri = new Uri("queue:create-product");
             var endPoint = await busControl.GetSendEndpoint(uri);
             await endPoint.Send(product);
