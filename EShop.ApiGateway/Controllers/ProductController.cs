@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EShop.ApiGateway.Controllers
@@ -37,6 +38,11 @@ namespace EShop.ApiGateway.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Add([FromForm]CreateProduct product)
         {
+            var userId = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
+            product.CreatedUserId = userId;
+            product.CreatedAt = DateTime.Now;
+
             var uri = new Uri("queue:create-product");
             var endPoint = await busControl.GetSendEndpoint(uri);
             await endPoint.Send(product);

@@ -11,6 +11,7 @@ namespace Eshop.Infrastructure.Command.Product
         public string ProductName { get; set; }
         public string ProductDescription { get; set; }
         public float ProductPrice { get; set; }
-        public Guid CaretoryId { get; set; }
+        public string CreatedUserId { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 }
