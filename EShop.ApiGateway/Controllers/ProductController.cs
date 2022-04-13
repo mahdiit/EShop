@@ -2,6 +2,8 @@
 using Eshop.Infrastructure.Event.Product;
 using Eshop.Infrastructure.Query.Product;
 using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -32,6 +34,7 @@ namespace EShop.ApiGateway.Controllers
 
 
         [HttpPost("Add")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Add([FromForm]CreateProduct product)
         {
             var uri = new Uri("queue:create-product");
