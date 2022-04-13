@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Eshop.Infrastructure\Eshop.Infrastructure.csproj" />
+    <ProjectReference Include="..\EShop.Product.DataProvider\EShop.Product.DataProvider.csproj" />
+  </ItemGroup>
+
+</Project>
