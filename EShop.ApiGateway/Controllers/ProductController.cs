@@ -29,7 +29,9 @@ namespace EShop.ApiGateway.Controllers
         [HttpGet("Get")]
         public async Task<IActionResult> Get(string id)
         {
-            var response = await ClientFactory.CreateRequestClient<GetProductById>().GetResponse<ProductCreated>(new GetProductById() { Id = id });            
+            var response = await ClientFactory
+                .CreateRequestClient<GetProductById>()
+                .GetResponse<ProductCreated>(new GetProductById() { Id = id });            
             return Accepted(response.Message);
         }
 
