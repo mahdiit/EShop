@@ -5,6 +5,7 @@ using Eshop.Infrastructure.Mongo;
 using Eshop.Infrastructure.Security;
 using Eshop.User.Api.Handlers;
 using Eshop.User.Api.Repositories;
+using Eshop.User.Api.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +39,7 @@ namespace Eshop.User.Api
             services.AddJwt(Configuration);
             services.AddSingleton<IDbInit, DbInit>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddSingleton<IEncrypter, Encrypter>();
             services.AddScoped<CreateUserHandler>();
             services.AddScoped<UserValidationHandler>();
