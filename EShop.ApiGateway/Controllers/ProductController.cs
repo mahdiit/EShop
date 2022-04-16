@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Polly;
+using Polly.Fallback;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,18 +22,25 @@ namespace EShop.ApiGateway.Controllers
     {
         IBusControl busControl;        
         IScopedClientFactory ClientFactory;
+        readonly AsyncFallbackPolicy<IActionResult> fallbackPolicy;
         public ProductController(IBusControl bus, IScopedClientFactory clientFactory)
         {
             busControl = bus;
             ClientFactory = clientFactory;
+            fallbackPolicy = Policy<IActionResult>
+                .Handle<Exception>()
+                .FallbackAsync(Content("Error in call"));
         }
 
         [HttpGet("Get")]
         public async Task<IActionResult> Get(string id)
         {
-            var request = ClientFactory.CreateRequestClient<GetProductById>();
-            var response = await request.GetResponse<ProductCreated>(new GetProductById() { Id = id });
-            return Accepted(response.Message);
+            return await fallbackPolicy.ExecuteAsync(async () =>
+            {
+                var request = ClientFactory.CreateRequestClient<GetProductById>();
+                var response = await request.GetResponse<ProductCreated>(new GetProductById() { Id = id });
+                return Accepted(response.Message);
+            });
         }
 
 
