@@ -12,14 +12,18 @@ namespace EShop.Product.Query.Api.QueryHandler
     public class GetProductByIdHandler : IConsumer<GetProductById>
     {
         IProductService ServiceApi;
-
+        public static int ExceptionCount = 0;
         public GetProductByIdHandler(IProductService service)
         {
             ServiceApi = service;
         }
         public async Task Consume(ConsumeContext<GetProductById> context)
         {
-            throw new Exception("Invalid");
+            if (ExceptionCount < 4)
+            {
+                ExceptionCount++;
+                throw new Exception("Invalid");
+            }
 
             var prod = await ServiceApi.GetProduct(context.Message.Id);
             await context.RespondAsync<ProductCreated>(prod);

@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Polly;
 using Polly.Fallback;
+using Polly.Retry;
+using Polly.Wrap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,11 @@ namespace EShop.ApiGateway.Controllers
         IBusControl busControl;        
         IScopedClientFactory ClientFactory;
         readonly AsyncFallbackPolicy<IActionResult> fallbackPolicy;
+        readonly AsyncRetryPolicy<IActionResult> retryPolicy;
+        readonly int MaxRetryCount = 4;
+
+        readonly AsyncPolicyWrap<IActionResult> policyWrap;
+
         public ProductController(IBusControl bus, IScopedClientFactory clientFactory)
         {
             busControl = bus;
@@ -30,12 +37,17 @@ namespace EShop.ApiGateway.Controllers
             fallbackPolicy = Policy<IActionResult>
                 .Handle<Exception>()
                 .FallbackAsync(Content("Error in call"));
+
+            retryPolicy = Policy<IActionResult>.Handle<Exception>().WaitAndRetryAsync(MaxRetryCount,
+                retryCount => TimeSpan.FromSeconds(Math.Pow(3, retryCount) / 3));
+
+            policyWrap = Policy.WrapAsync(fallbackPolicy, retryPolicy);
         }
 
         [HttpGet("Get")]
         public async Task<IActionResult> Get(string id)
         {
-            return await fallbackPolicy.ExecuteAsync(async () =>
+            return await policyWrap.ExecuteAsync(async () =>
             {
                 var request = ClientFactory.CreateRequestClient<GetProductById>();
                 var response = await request.GetResponse<ProductCreated>(new GetProductById() { Id = id });
