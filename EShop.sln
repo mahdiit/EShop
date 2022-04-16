@@ -24,7 +24,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApacheBenchmark", "ApacheBenchmark", "{0A81336E-EA5F-4AE7-860D-370B3ED54300}"
 	ProjectSection(SolutionItems) = preProject
 		GetProduct.txt = GetProduct.txt
-		..\..\..\Downloads\httpd-2.4.53-win64-VS16\ReadMe.txt = ..\..\..\Downloads\httpd-2.4.53-win64-VS16\ReadMe.txt
+		Note.txt = Note.txt
 	EndProjectSection
 EndProject
 Global
