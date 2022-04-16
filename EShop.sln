@@ -21,6 +21,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.ApiGateway.Test", "ES
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshop.User.Api.Test", "Eshop.User.Api.Test\Eshop.User.Api.Test.csproj", "{FF6B6E08-65F9-4FB9-81B3-E68D12CE6279}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApacheBenchmark", "ApacheBenchmark", "{0A81336E-EA5F-4AE7-860D-370B3ED54300}"
+	ProjectSection(SolutionItems) = preProject
+		GetProduct.txt = GetProduct.txt
+		..\..\..\Downloads\httpd-2.4.53-win64-VS16\ReadMe.txt = ..\..\..\Downloads\httpd-2.4.53-win64-VS16\ReadMe.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
