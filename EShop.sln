@@ -23,6 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshop.User.Api.Test", "Esho
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApacheBenchmark", "ApacheBenchmark", "{0A81336E-EA5F-4AE7-860D-370B3ED54300}"
 	ProjectSection(SolutionItems) = preProject
+		AddPoduct.txt = AddPoduct.txt
 		GetProduct.txt = GetProduct.txt
 		Note.txt = Note.txt
 	EndProjectSection
