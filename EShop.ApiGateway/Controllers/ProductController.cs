@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Polly;
+using Polly.Bulkhead;
+using Polly.CircuitBreaker;
 using Polly.Fallback;
 using Polly.Retry;
 using Polly.Wrap;
@@ -22,32 +24,37 @@ namespace EShop.ApiGateway.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        IBusControl busControl;        
-        IScopedClientFactory ClientFactory;
-        readonly AsyncFallbackPolicy<IActionResult> fallbackPolicy;
-        readonly AsyncRetryPolicy<IActionResult> retryPolicy;
-        readonly int MaxRetryCount = 4;
+        private IBusControl busControl;
+        private IScopedClientFactory ClientFactory;
+        private static readonly int MaxRetryCount = 1;
 
-        readonly AsyncPolicyWrap<IActionResult> policyWrap;
+        #region Policy List
+
+        private AsyncFallbackPolicy<IActionResult> fallbackPolicy;
+        private static AsyncCircuitBreakerPolicy<IActionResult> circuitBreakerPolicy = Policy<IActionResult>.Handle<Exception>().AdvancedCircuitBreakerAsync(0.5, TimeSpan.FromSeconds(30), 2, TimeSpan.FromMinutes(1));
+        private static AsyncRetryPolicy<IActionResult> retryPolicy = Policy<IActionResult>.Handle<Exception>().WaitAndRetryAsync(MaxRetryCount, retryCount => TimeSpan.FromSeconds(Math.Pow(3, retryCount) / 3));
+        private static AsyncPolicyWrap<IActionResult> policyWrap = Policy.WrapAsync(circuitBreakerPolicy, retryPolicy);
+        private static AsyncBulkheadPolicy bulkheadPolicy = Policy.BulkheadAsync(1, 2, (ctx) => {
+            throw new Exception("All slot are filled");
+        });
+        #endregion
 
         public ProductController(IBusControl bus, IScopedClientFactory clientFactory)
         {
             busControl = bus;
             ClientFactory = clientFactory;
-            fallbackPolicy = Policy<IActionResult>
-                .Handle<Exception>()
-                .FallbackAsync(Content("Error in call"));
 
-            retryPolicy = Policy<IActionResult>.Handle<Exception>().WaitAndRetryAsync(MaxRetryCount,
-                retryCount => TimeSpan.FromSeconds(Math.Pow(3, retryCount) / 3));
-
-            policyWrap = Policy.WrapAsync(fallbackPolicy, retryPolicy);
+            fallbackPolicy = Policy<IActionResult>.Handle<Exception>().FallbackAsync(Content("Error in call"));
         }
 
         [HttpGet("Get")]
         public async Task<IActionResult> Get(string id)
         {
-            return await policyWrap.ExecuteAsync(async () =>
+            //var circuitState = circuitBreakerPolicy.CircuitState;
+            var AvailableCount = bulkheadPolicy.BulkheadAvailableCount;
+            var EmptyCount = bulkheadPolicy.QueueAvailableCount;
+
+            return await bulkheadPolicy.ExecuteAsync(async () =>
             {
                 var request = ClientFactory.CreateRequestClient<GetProductById>();
                 var response = await request.GetResponse<ProductCreated>(new GetProductById() { Id = id });
@@ -66,7 +73,7 @@ namespace EShop.ApiGateway.Controllers
                 product.CreatedUserId = userId;
                 product.CreatedAt = DateTime.Now;
             }
-            
+
             var uri = new Uri("queue:create-product");
             var endPoint = await busControl.GetSendEndpoint(uri);
             await endPoint.Send(product);

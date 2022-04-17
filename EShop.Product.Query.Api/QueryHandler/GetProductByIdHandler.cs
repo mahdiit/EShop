@@ -19,11 +19,13 @@ namespace EShop.Product.Query.Api.QueryHandler
         }
         public async Task Consume(ConsumeContext<GetProductById> context)
         {
-            if (ExceptionCount < 4)
-            {
-                ExceptionCount++;
-                throw new Exception("Invalid");
-            }
+            //if (ExceptionCount < 10)
+            //{
+            //    ExceptionCount++;
+            //    throw new Exception("Invalid");
+            //}
+
+            await Task.Delay(30000);
 
             var prod = await ServiceApi.GetProduct(context.Message.Id);
             await context.RespondAsync<ProductCreated>(prod);
