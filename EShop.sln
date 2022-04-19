@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Product.DataProvider"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.ApiGateway.Test", "EShop.ApiGateway.Test\EShop.ApiGateway.Test.csproj", "{3111630E-2344-41CD-A51A-7E568D7B75BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshop.User.Api.Test", "Eshop.User.Api.Test\Eshop.User.Api.Test.csproj", "{FF6B6E08-65F9-4FB9-81B3-E68D12CE6279}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshop.User.Api.Test", "Eshop.User.Api.Test\Eshop.User.Api.Test.csproj", "{FF6B6E08-65F9-4FB9-81B3-E68D12CE6279}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApacheBenchmark", "ApacheBenchmark", "{0A81336E-EA5F-4AE7-860D-370B3ED54300}"
 	ProjectSection(SolutionItems) = preProject
@@ -27,6 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApacheBenchmark", "ApacheBe
 		GetProduct.txt = GetProduct.txt
 		Note.txt = Note.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Cart.Api", "EShop.Cart.Api\EShop.Cart.Api.csproj", "{A2FCEB3E-0865-412B-98E4-321182BBBC78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Cart.DataProvider", "EShop.Cart.DataProvider\EShop.Cart.DataProvider.csproj", "{94DFCA42-5758-45A3-AA45-AE8B01D42654}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +74,14 @@ Global
 		{FF6B6E08-65F9-4FB9-81B3-E68D12CE6279}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF6B6E08-65F9-4FB9-81B3-E68D12CE6279}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF6B6E08-65F9-4FB9-81B3-E68D12CE6279}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2FCEB3E-0865-412B-98E4-321182BBBC78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2FCEB3E-0865-412B-98E4-321182BBBC78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2FCEB3E-0865-412B-98E4-321182BBBC78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2FCEB3E-0865-412B-98E4-321182BBBC78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94DFCA42-5758-45A3-AA45-AE8B01D42654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94DFCA42-5758-45A3-AA45-AE8B01D42654}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94DFCA42-5758-45A3-AA45-AE8B01D42654}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94DFCA42-5758-45A3-AA45-AE8B01D42654}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

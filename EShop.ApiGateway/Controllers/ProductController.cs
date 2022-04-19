@@ -51,8 +51,8 @@ namespace EShop.ApiGateway.Controllers
         public async Task<IActionResult> Get(string id)
         {
             //var circuitState = circuitBreakerPolicy.CircuitState;
-            var AvailableCount = bulkheadPolicy.BulkheadAvailableCount;
-            var EmptyCount = bulkheadPolicy.QueueAvailableCount;
+            //var AvailableCount = bulkheadPolicy.BulkheadAvailableCount;
+            //var EmptyCount = bulkheadPolicy.QueueAvailableCount;
 
             return await bulkheadPolicy.ExecuteAsync(async () =>
             {

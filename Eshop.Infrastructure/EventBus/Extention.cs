@@ -1,4 +1,5 @@
-﻿using Eshop.Infrastructure.Command.User;
+﻿using Eshop.Infrastructure.Command.Cart;
+using Eshop.Infrastructure.Command.User;
 using Eshop.Infrastructure.Event.User;
 using Eshop.Infrastructure.Query.Product;
 using Eshop.Infrastructure.Query.User;
@@ -34,6 +35,10 @@ namespace Eshop.Infrastructure.EventBus
                 x.AddRequestClient<CreateUser>(new Uri("exchange:create-user"));
                 x.AddRequestClient<ValidateUser>(new Uri("exchange:valid-user"));
 
+                x.AddRequestClient<GetCart>(new Uri("exchange:get-cart"));
+                x.AddRequestClient<RemoveCart>(new Uri("exchange:remove-cart"));
+                x.AddRequestClient<AddCartItem>(new Uri("exchange:add-cartItem"));
+                x.AddRequestClient<RemoveCartItem>(new Uri("exchange:remove-cartItem"));
             });
 
             return services;
