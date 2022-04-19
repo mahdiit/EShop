@@ -22,7 +22,7 @@ namespace EShop.ApiGateway.Controllers
         }
 
         [HttpGet("GetCart")]
-        public async Task<IActionResult> GetCart(GetCart getCart)
+        public async Task<IActionResult> GetCart([FromQuery]GetCart getCart)
         {
             var request = ClientFactory.CreateRequestClient<GetCart>();
             var response = await request.GetResponse<GetCartResult>(getCart);

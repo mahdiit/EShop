@@ -23,7 +23,7 @@ namespace EShop.Cart.DataProvider.Repositories
             GetCartResult cart;
             if (string.IsNullOrEmpty(cartData))
             {
-                cart = new GetCartResult();
+                cart = new GetCartResult() { UserId = cartItem.UserId };
             }
             else
             {
