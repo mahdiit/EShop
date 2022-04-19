@@ -8,5 +8,9 @@ namespace Eshop.Infrastructure.Command.Cart
 {
     public class AddCartItem
     {
+        public string UserId { get; set; }
+        public string ProductId { get; set; }
+        public int Amount { get; set; }
+        public decimal Price { get; set; }
     }
 }

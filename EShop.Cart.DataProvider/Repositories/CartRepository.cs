@@ -1,33 +1,83 @@
 ﻿using Eshop.Infrastructure.Command.Cart;
 using Eshop.Infrastructure.Event.Cart;
+using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace EShop.Cart.DataProvider.Repositories
 {
     public class CartRepository : ICartRepository
     {
-        public Task<CartItemCreated> AddItem(AddCartItem cartItem)
+        IDistributedCache distributedCache;
+        public CartRepository(IDistributedCache cache)
         {
-            throw new NotImplementedException();
+            distributedCache = cache;
+        }
+        public async Task<CartItemCreated> AddItem(AddCartItem cartItem)
+        {
+            var cartData = await distributedCache.GetStringAsync(cartItem.UserId);
+            GetCartResult cart;
+            if (string.IsNullOrEmpty(cartData))
+            {
+                cart = new GetCartResult();
+            }
+            else
+            {
+                cart = JsonSerializer.Deserialize<GetCartResult>(cartData);
+            }
+            var item = new CartItemCreated() { Price = cartItem.Price, ProductId = cartItem.ProductId, Quanitty = cartItem.Amount };
+            cart.Items.Add(item);
+
+            await distributedCache.SetStringAsync(cartItem.UserId, JsonSerializer.Serialize(cart));
+            return item;
         }
 
-        public Task<GetCartResult> GetCart(GetCart getCart)
+        public async Task<GetCartResult> GetCart(GetCart getCart)
         {
-            throw new NotImplementedException();
+            var cartData = await distributedCache.GetStringAsync(getCart.UserId);
+            GetCartResult cart;
+            if (string.IsNullOrEmpty(cartData))
+            {
+                cart = new GetCartResult();
+            }
+            else
+            {
+                cart = JsonSerializer.Deserialize<GetCartResult>(cartData);
+            }
+            return cart;
         }
 
-        public Task<CartRemoved> RemoveCart(RemoveCart removeCart)
+        public async Task<CartRemoved> RemoveCart(RemoveCart removeCart)
         {
-            throw new NotImplementedException();
+            await distributedCache.SetStringAsync(removeCart.UserId, "");
+            return new CartRemoved() { IsSucess = true };
         }
 
-        public Task<CartItemRemoved> RemoveItem(RemoveCartItem cartItem)
+        public async Task<CartItemRemoved> RemoveItem(RemoveCartItem cartItem)
         {
-            throw new NotImplementedException();
+            var cartData = await distributedCache.GetStringAsync(cartItem.UserId);
+            GetCartResult cart;
+            if (string.IsNullOrEmpty(cartData))
+            {
+                cart = new GetCartResult();
+            }
+            else
+            {
+                cart = JsonSerializer.Deserialize<GetCartResult>(cartData);
+            }
+
+            var item = cart.Items.FirstOrDefault(x => x.ProductId == cartItem.ProductId);
+            if(item != null)
+            {
+                cart.Items.Remove(item);
+            }
+
+            await distributedCache.SetStringAsync(cartItem.UserId, JsonSerializer.Serialize(cart));
+            return new CartItemRemoved() { IsSucess = true };
         }
     }
 }

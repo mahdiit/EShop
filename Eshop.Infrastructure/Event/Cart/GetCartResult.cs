@@ -8,9 +8,13 @@ namespace Eshop.Infrastructure.Event.Cart
 {
     public class GetCartResult
     {
+        public GetCartResult()
+        {
+            Items = new List<CartItemCreated>();
+        }
         public string CartId { get; set; }
         public decimal Amount { get; set; }
-        public List<CartItemCreated> Items { get; set; }
+        public IList<CartItemCreated> Items { get; set; }
         public string UserId { get; set; }
     }
 }

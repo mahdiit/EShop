@@ -62,15 +62,11 @@ namespace Eshop.User.Api
 
                     config.ReceiveEndpoint("create-user", ep =>
                     {
-                        ep.PrefetchCount = 16;
-                        ep.UseMessageRetry(cfg => { cfg.Interval(2, 100); });
                         ep.ConfigureConsumer<CreateUserHandler>(provider);
                     });
 
                     config.ReceiveEndpoint("valid-user", ep =>
                     {
-                        ep.PrefetchCount = 16;
-                        ep.UseMessageRetry(cfg => { cfg.Interval(2, 100); });
                         ep.ConfigureConsumer<UserValidationHandler>(provider);
                     });
 
@@ -86,7 +82,7 @@ namespace Eshop.User.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();            
+            app.UseRouting();
             app.UseAuthorization();
             app.ApplicationServices.GetService<IDbInit>().InitAsync();
             app.ApplicationServices.GetService<IBusControl>().Start();

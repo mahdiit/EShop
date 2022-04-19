@@ -49,8 +49,6 @@ namespace Eshop.Product.Api
 
                     config.ReceiveEndpoint("create-product", ep =>
                     {
-                        ep.PrefetchCount = 16;
-                        ep.UseMessageRetry(cfg => { cfg.Interval(2, 100); });
                         ep.ConfigureConsumer<CreateProductHandler>(provider);
                     });
                 }));

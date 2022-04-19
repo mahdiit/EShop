@@ -30,6 +30,10 @@ namespace EShop.Cart.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddStackExchangeRedisCache(setup =>
+            {
+                setup.Configuration = $"{Configuration["redis:Host"]}:{Configuration["redis:Port"]}";
+            });
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<ICartService, CartService>();
 

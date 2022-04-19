@@ -8,6 +8,7 @@ namespace Eshop.Infrastructure.Command.Cart
 {
     public class RemoveCartItem
     {
+        public string UserId { get; set; }
         public string ProductId { get; set; }
     }
 }
