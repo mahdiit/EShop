@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Eshop.Infrastructure.Event.Cart
+namespace Eshop.Infrastructure.Command.Cart
 {
     public class CartItemCreated
     {

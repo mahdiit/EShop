@@ -1,5 +1,5 @@
 ﻿using Eshop.Infrastructure.Command.User;
-using Eshop.Infrastructure.Event.User;
+using Eshop.Infrastructure.Command.User;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;

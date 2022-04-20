@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Eshop.Infrastructure.Command.Cart
+namespace Eshop.Infrastructure.Command.Order
 {
-    public class CartItemRemoved
+    public class GetAllOrder
     {
-        public bool IsSucess { get; set; }
+        public string UserId { get; set; }
     }
 }

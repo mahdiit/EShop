@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Eshop.Infrastructure.Event.User
+namespace Eshop.Infrastructure.Command.User
 {
     public class UserCreated: CreateUser
     {

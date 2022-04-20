@@ -1,7 +1,7 @@
 ﻿using Eshop.Infrastructure.Command.Cart;
 using Eshop.Infrastructure.Command.Order;
 using Eshop.Infrastructure.Command.User;
-using Eshop.Infrastructure.Event.User;
+using Eshop.Infrastructure.Command.User;
 using Eshop.Infrastructure.Query.Product;
 using Eshop.Infrastructure.Query.User;
 using MassTransit;
@@ -43,6 +43,7 @@ namespace Eshop.Infrastructure.EventBus
 
                 x.AddRequestClient<CreateOrder>(new Uri("exchange:create-order"));
                 x.AddRequestClient<GetOrder>(new Uri("exchange:get-order"));
+                x.AddRequestClient<GetAllOrder>(new Uri("exchange:getall-order"));
             });
 
             return services;

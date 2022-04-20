@@ -9,5 +9,6 @@ namespace Eshop.Infrastructure.Event.Order
     public class OrderCreated
     {
         public string OrderId { get; set; }
+        public string UserId { get; set; }
     }
 }

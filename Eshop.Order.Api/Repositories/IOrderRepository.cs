@@ -10,5 +10,6 @@ namespace Eshop.Order.Api.Repositories
     public interface IOrderRepository
     {
         Task<GetOrderResult> GetOrder(GetOrder order);
+        Task<GetAllOrderResult> GetAllOrder(GetAllOrder order);
     }
 }

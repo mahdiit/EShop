@@ -1,5 +1,5 @@
 ﻿using Eshop.Infrastructure.Command.Cart;
-using Eshop.Infrastructure.Event.Cart;
+using Eshop.Infrastructure.Command.Cart;
 using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

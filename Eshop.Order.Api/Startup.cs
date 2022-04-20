@@ -38,6 +38,7 @@ namespace Eshop.Order.Api
 
             services.AddScoped<CreateOrderHandler>();
             services.AddScoped<GetOrderHandler>();
+            services.AddScoped<GetAllOrderHandler>();
 
             var rabbitMqConfig = new RabbitMqConfig();
             Configuration.Bind("rabbitmq", rabbitMqConfig);
@@ -46,6 +47,7 @@ namespace Eshop.Order.Api
             {
                 x.AddConsumer<CreateOrderHandler>();
                 x.AddConsumer<GetOrderHandler>();
+                x.AddConsumer<GetAllOrderHandler>();
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
                 {
                     config.Host(new Uri(rabbitMqConfig.ConnectionString), hostConfig =>
@@ -56,6 +58,7 @@ namespace Eshop.Order.Api
 
                     config.ReceiveEndpoint("create-order", ep => { ep.ConfigureConsumer<CreateOrderHandler>(provider); });
                     config.ReceiveEndpoint("get-order", ep => { ep.ConfigureConsumer<GetOrderHandler>(provider); });
+                    config.ReceiveEndpoint("getall-order", ep => { ep.ConfigureConsumer<GetAllOrderHandler>(provider); });
                 }));
             });
 

@@ -28,5 +28,14 @@ namespace EShop.ApiGateway.Controllers
 
             return Ok(response.Message);
         }
+
+        [HttpGet("GetAllOrder")]
+        public async Task<IActionResult> GetAllOrder([FromQuery] GetAllOrder getOrder)
+        {
+            var request = ClientFactory.CreateRequestClient<GetAllOrder>();
+            var response = await request.GetResponse<GetAllOrderResult>(getOrder);
+
+            return Ok(response.Message);
+        }
     }
 }

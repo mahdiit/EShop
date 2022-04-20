@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MassTransit;
 using Eshop.Infrastructure.Command.User;
-using Eshop.Infrastructure.Event.User;
+using Eshop.Infrastructure.Command.User;
 using Eshop.Infrastructure.Query.User;
 
 namespace EShop.ApiGateway.Controllers

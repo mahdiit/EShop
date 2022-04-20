@@ -13,6 +13,11 @@ namespace Eshop.Order.Api.Services
             orderRepository = repository;
         }
 
+        public async Task<GetAllOrderResult> GetAllOrder(GetAllOrder order)
+        {
+            return await orderRepository.GetAllOrder(order);
+        }
+
         public async Task<GetOrderResult> GetOrder(GetOrder order)
         {
             return await orderRepository.GetOrder(order);
