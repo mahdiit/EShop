@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Eshop.Infrastructure.Command.Product
+namespace Eshop.Infrastructure.Event.Product
 {
     public class ProductCreated
     {

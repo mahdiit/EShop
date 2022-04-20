@@ -1,5 +1,5 @@
 ﻿using Eshop.Infrastructure.Command.Cart;
-using Eshop.Infrastructure.Command.Cart;
+using Eshop.Infrastructure.Event.Cart;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;

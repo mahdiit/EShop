@@ -1,4 +1,5 @@
 ﻿using Eshop.Infrastructure.Command.Order;
+using Eshop.Order.Api.Services;
 using MassTransit;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,15 @@ namespace Eshop.Order.Api.Handlers
 {
     public class GetAllOrderHandler : IConsumer<GetAllOrder>
     {
-        public GetAllOrderHandler()
+        IOrderService orderService;
+        public GetAllOrderHandler(IOrderService order)
         {
-
+            orderService = order;
         }
-        public Task Consume(ConsumeContext<GetAllOrder> context)
+        public async Task Consume(ConsumeContext<GetAllOrder> context)
         {
-            throw new NotImplementedException();
+            var result = await orderService.GetAllOrder(context.Message);
+            await context.RespondAsync(result);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Eshop.Infrastructure.Command.Cart;
 using Eshop.Infrastructure.Command.Order;
 using Eshop.Infrastructure.Command.User;
-using Eshop.Infrastructure.Command.User;
 using Eshop.Infrastructure.Query.Product;
 using Eshop.Infrastructure.Query.User;
 using MassTransit;

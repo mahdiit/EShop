@@ -1,5 +1,5 @@
 using Eshop.Infrastructure.Command.Product;
-using Eshop.Infrastructure.Command.Product;
+using Eshop.Infrastructure.Event.Product;
 using Eshop.Infrastructure.Query.Product;
 using EShop.ApiGateway.Controllers;
 using MassTransit;

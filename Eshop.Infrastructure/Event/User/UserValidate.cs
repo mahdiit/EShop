@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Eshop.Infrastructure.Command.User
+namespace Eshop.Infrastructure.Event.User
 {
     public class UserValidate
     {
