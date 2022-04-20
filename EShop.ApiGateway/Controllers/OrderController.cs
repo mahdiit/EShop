@@ -37,5 +37,15 @@ namespace EShop.ApiGateway.Controllers
 
             return Ok(response.Message);
         }
+
+        [HttpPost("CreateOrder")]
+        public async Task<IActionResult> CreateOrder([FromForm]CreateOrder createOrder)
+        {
+            var request = ClientFactory.CreateRequestClient<CreateOrder>();
+            var response = await request.GetResponse<OrderCreated>(createOrder);
+
+            return Ok(response.Message);
+        }
+
     }
 }

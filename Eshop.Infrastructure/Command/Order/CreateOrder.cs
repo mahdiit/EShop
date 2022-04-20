@@ -8,5 +8,7 @@ namespace Eshop.Infrastructure.Command.Order
 {
     public class CreateOrder
     {
+        public string OrderId { get; set; }
+        public string UserId { get; set; }
     }
 }

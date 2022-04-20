@@ -18,6 +18,17 @@ namespace Eshop.Order.Api.Repositories
             Table = database.GetCollection<OrderCreated>("order");
         }
 
+        public async Task<OrderCreated> CreateOrder(CreateOrder createOrder)
+        {
+            var item = new OrderCreated()
+            {
+                OrderId = createOrder.OrderId,
+                UserId = createOrder.UserId
+            };
+            await Table.InsertOneAsync(item);
+            return item;
+        }
+
         public async Task<GetAllOrderResult> GetAllOrder(GetAllOrder order)
         {
             var item = await Table.AsQueryable().Where(x => x.UserId == order.UserId).ToListAsync();

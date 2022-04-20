@@ -42,7 +42,7 @@ namespace Eshop.Infrastructure.EventBus
 
                 x.AddRequestClient<CreateOrder>(new Uri("exchange:create-order"));
                 x.AddRequestClient<GetOrder>(new Uri("exchange:get-order"));
-                x.AddRequestClient<GetAllOrder>(new Uri("exchange:getall-order"));
+                x.AddRequestClient<GetAllOrder>(new Uri("exchange:getall-order"));                
             });
 
             return services;

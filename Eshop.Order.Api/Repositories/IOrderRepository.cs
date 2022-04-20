@@ -11,5 +11,6 @@ namespace Eshop.Order.Api.Repositories
     {
         Task<GetOrderResult> GetOrder(GetOrder order);
         Task<GetAllOrderResult> GetAllOrder(GetAllOrder order);
+        Task<OrderCreated> CreateOrder(CreateOrder createOrder);
     }
 }
