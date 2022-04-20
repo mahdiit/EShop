@@ -16,7 +16,7 @@ namespace Eshop.Order.Api.Handlers
             orderService = order;
         }
 
-        public Task Consume(ConsumeContext<CreateOrder> context)
+        public async Task Consume(ConsumeContext<CreateOrder> context)
         {
             var result = await orderService.CreateOrder(context.Message);
             await context.RespondAsync(result);
