@@ -1,3 +1,9 @@
+using Eshop.Infrastructure.EventBus;
+using Eshop.Infrastructure.Mongo;
+using Eshop.Order.Api.Handlers;
+using Eshop.Order.Api.Repositories;
+using Eshop.Order.Api.Services;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -24,8 +30,35 @@ namespace Eshop.Order.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+            services.AddMongoDb(Configuration);
+            services.AddSingleton<IDbInit, DbInit>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderService, OrderService>();
+
+            services.AddScoped<CreateOrderHandler>();
+            services.AddScoped<GetOrderHandler>();
+
+            var rabbitMqConfig = new RabbitMqConfig();
+            Configuration.Bind("rabbitmq", rabbitMqConfig);
+
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<CreateOrderHandler>();
+                x.AddConsumer<GetOrderHandler>();
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
+                {
+                    config.Host(new Uri(rabbitMqConfig.ConnectionString), hostConfig =>
+                    {
+                        hostConfig.Username(rabbitMqConfig.Username);
+                        hostConfig.Password(rabbitMqConfig.Password);
+                    });
+
+                    config.ReceiveEndpoint("create-order", ep => { ep.ConfigureConsumer<CreateOrderHandler>(provider); });
+                    config.ReceiveEndpoint("get-order", ep => { ep.ConfigureConsumer<GetOrderHandler>(provider); });
+                }));
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,8 +70,10 @@ namespace Eshop.Order.Api
             }
 
             app.UseRouting();
-
             app.UseAuthorization();
+
+            app.ApplicationServices.GetService<IDbInit>().InitAsync();
+            app.ApplicationServices.GetService<IBusControl>().Start();
 
             app.UseEndpoints(endpoints =>
             {
