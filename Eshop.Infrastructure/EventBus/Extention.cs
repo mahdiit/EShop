@@ -1,6 +1,7 @@
 ﻿using Eshop.Infrastructure.Command.Cart;
 using Eshop.Infrastructure.Command.Order;
 using Eshop.Infrastructure.Command.User;
+using Eshop.Infrastructure.Command.Wallet;
 using Eshop.Infrastructure.Query.Product;
 using Eshop.Infrastructure.Query.User;
 using MassTransit;
@@ -42,7 +43,10 @@ namespace Eshop.Infrastructure.EventBus
 
                 x.AddRequestClient<CreateOrder>(new Uri("exchange:create-order"));
                 x.AddRequestClient<GetOrder>(new Uri("exchange:get-order"));
-                x.AddRequestClient<GetAllOrder>(new Uri("exchange:getall-order"));                
+                x.AddRequestClient<GetAllOrder>(new Uri("exchange:getall-order"));
+
+                x.AddRequestClient<AddFunds>(new Uri("exchange:add-funds"));
+                x.AddRequestClient<DeductFunds>(new Uri("exchange:deduct-funds"));
             });
 
             return services;
