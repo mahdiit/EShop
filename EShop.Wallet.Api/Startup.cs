@@ -1,6 +1,8 @@
 using Eshop.Infrastructure.EventBus;
 using Eshop.Infrastructure.Mongo;
 using EShop.Wallet.Api.Handlers;
+using EShop.Wallet.Api.Repositories;
+using EShop.Wallet.Api.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +36,9 @@ namespace EShop.Wallet.Api
 
             services.AddScoped<AddFundsHandler>();
             services.AddScoped<DeductFundsHandler>();
+
+            services.AddScoped<IWalletRepository, WalletRepository>();
+            services.AddScoped<IWalletService, WalletService>();
 
             var rabbitMqConfig = new RabbitMqConfig();
             Configuration.Bind("rabbitmq", rabbitMqConfig);
