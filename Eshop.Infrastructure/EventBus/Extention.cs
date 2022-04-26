@@ -1,4 +1,5 @@
 ﻿using Eshop.Infrastructure.Command.Cart;
+using Eshop.Infrastructure.Command.Inventory;
 using Eshop.Infrastructure.Command.Order;
 using Eshop.Infrastructure.Command.User;
 using Eshop.Infrastructure.Command.Wallet;
@@ -47,6 +48,9 @@ namespace Eshop.Infrastructure.EventBus
 
                 x.AddRequestClient<AddFunds>(new Uri("exchange:add-funds"));
                 x.AddRequestClient<DeductFunds>(new Uri("exchange:deduct-funds"));
+
+                x.AddRequestClient<AllocateProduct>(new Uri("exchange:allocate-product"));
+                x.AddRequestClient<ReleaseProduct>(new Uri("exchange:release-product"));
             });
 
             return services;

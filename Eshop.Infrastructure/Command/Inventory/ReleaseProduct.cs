@@ -8,6 +8,6 @@ namespace Eshop.Infrastructure.Command.Inventory
 {
     public class ReleaseProduct
     {
-
+        public List<StockItem> Items { get; set; }
     }
 }

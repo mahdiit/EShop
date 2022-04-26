@@ -8,5 +8,6 @@ namespace Eshop.Infrastructure.Event.Inventory
 {
     public class ProductReleased
     {
+        public bool IsSucess { get; set; }
     }
 }
