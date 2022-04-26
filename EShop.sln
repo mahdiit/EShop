@@ -32,7 +32,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Cart.Api", "EShop.Car
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Cart.DataProvider", "EShop.Cart.DataProvider\EShop.Cart.DataProvider.csproj", "{94DFCA42-5758-45A3-AA45-AE8B01D42654}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Wallet.Api", "EShop.Wallet.Api\EShop.Wallet.Api.csproj", "{A070FF33-60AC-4E85-BDE4-656A16450B71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Wallet.Api", "EShop.Wallet.Api\EShop.Wallet.Api.csproj", "{A070FF33-60AC-4E85-BDE4-656A16450B71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Inventory.Api", "EShop.Inventory.Api\EShop.Inventory.Api.csproj", "{6EC2BD74-55C7-46ED-B5EE-BA9EB388F0CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,6 +90,10 @@ Global
 		{A070FF33-60AC-4E85-BDE4-656A16450B71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A070FF33-60AC-4E85-BDE4-656A16450B71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A070FF33-60AC-4E85-BDE4-656A16450B71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EC2BD74-55C7-46ED-B5EE-BA9EB388F0CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EC2BD74-55C7-46ED-B5EE-BA9EB388F0CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EC2BD74-55C7-46ED-B5EE-BA9EB388F0CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EC2BD74-55C7-46ED-B5EE-BA9EB388F0CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

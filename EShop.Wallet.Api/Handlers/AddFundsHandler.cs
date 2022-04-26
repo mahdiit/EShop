@@ -1,4 +1,5 @@
 ﻿using Eshop.Infrastructure.Command.Wallet;
+using EShop.Wallet.Api.Services;
 using MassTransit;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,15 @@ namespace EShop.Wallet.Api.Handlers
 {
     public class AddFundsHandler : IConsumer<AddFunds>
     {
+        IWalletService Service;
+        public AddFundsHandler(IWalletService walletService)
+        {
+            Service = walletService;
+        }
         public async Task Consume(ConsumeContext<AddFunds> context)
         {
-            throw new NotImplementedException();
+            var result = await Service.AddFunds(context.Message);
+            await context.RespondAsync(result);
         }
     }
 }

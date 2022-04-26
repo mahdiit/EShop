@@ -1,5 +1,4 @@
 ﻿using Eshop.Infrastructure.Command.Cart;
-using Eshop.Infrastructure.Command.Cart;
 using EShop.Cart.DataProvider.Services;
 using MassTransit;
 using System;
